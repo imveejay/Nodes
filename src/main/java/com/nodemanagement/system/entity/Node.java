@@ -24,6 +24,9 @@ public class Node {
     @OrderBy("name ASC")
     private Set<Node> children = new LinkedHashSet<>();
 
+    protected Node() {
+    }
+
     public Node(String name, Node parent) {
         this.name = name;
         this.parent = parent;

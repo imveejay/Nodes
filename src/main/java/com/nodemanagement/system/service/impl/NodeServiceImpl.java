@@ -57,14 +57,10 @@ public class NodeServiceImpl implements NodeService {
     @Override
     public NodeResponseDto moveChildNode(final String destParentName, final String childName) {
         Node movedChild = nodeDao.moveChildNode(destParentName, childName);
-        if (movedChild == null || movedChild.getParent() == null) {
-            return null;
-        }
-
         Node parent = movedChild.getParent();
 
         NodeResponseDto response = new NodeResponseDto();
-        response.setParent(mapToDto(parent));
+        response.setParent(mapToDto(movedChild));
 
         return response;
     }

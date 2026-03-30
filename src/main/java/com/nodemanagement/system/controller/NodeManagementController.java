@@ -4,10 +4,14 @@ import com.nodemanagement.system.dto.NodeRequest;
 import com.nodemanagement.system.dto.NodeResponseDto;
 import com.nodemanagement.system.service.NodeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/nodes")
+@RequestMapping(
+        value = "/nodes",
+        produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
+)
 public class NodeManagementController {
 
     @Autowired
@@ -18,18 +22,18 @@ public class NodeManagementController {
         return nodeService.getNodeByName(parentName);
     }
 
-    @PostMapping("/addNode")
+    @PostMapping(value = "/addNode", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public NodeResponseDto addNode(@RequestBody NodeRequest nodeRequest) {
         return nodeService.addNode(nodeRequest);
     }
 
-    @PostMapping("{parentName}/addChildNode")
+    @PostMapping(value = "{parentName}/addChildNode", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public NodeResponseDto addChildNode(@PathVariable String parentName,
                                         @RequestBody NodeRequest nodeRequest) {
         return nodeService.addChildNode(parentName, nodeRequest);
     }
 
-    @PutMapping("{parentName}/moveChildNode")
+    @PutMapping(value = "{parentName}/moveChildNode", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public NodeResponseDto moveChildNode(@PathVariable String parentName,
                                         @RequestBody NodeRequest nodeRequest) {
         return nodeService.moveChildNode(parentName, nodeRequest.getName());

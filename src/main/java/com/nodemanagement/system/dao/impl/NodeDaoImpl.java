@@ -24,6 +24,7 @@ public class NodeDaoImpl implements NodeDao {
             throw new IllegalArgumentException("Node already exists: " + nodeName);
         }
 
+        node = new Node(nodeName, null);
         return nodeRepo.saveAndFlush(node);
     }
 
