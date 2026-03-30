@@ -23,13 +23,13 @@ class NodeDaoImplTest {
 
     @Test
     void test_getNodeByName() {
-        Node node = new Node("alpha", null);
-        when(nodeRepo.findNodeByName("alpha")).thenReturn(node);
+        Node node = new Node("parent", null);
+        when(nodeRepo.findNodeByName("parent")).thenReturn(node);
 
-        Node result = nodeDao.getNodeByName("alpha");
+        Node result = nodeDao.getNodeByName("parent");
 
         assertSame(node, result);
-        verify(nodeRepo).findNodeByName("alpha");
+        verify(nodeRepo).findNodeByName("parent");
     }
 
     @Test
