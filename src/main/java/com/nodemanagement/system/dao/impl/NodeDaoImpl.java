@@ -67,7 +67,6 @@ public class NodeDaoImpl implements NodeDao {
             throw new IllegalArgumentException("Destination parent not found: " + destParentName);
         }
 
-        // prevent moving to itself
         if (child.getName().equalsIgnoreCase(destParentName)) {
             throw new IllegalArgumentException("Cannot move node to itself");
         }
@@ -76,21 +75,17 @@ public class NodeDaoImpl implements NodeDao {
             throw new IllegalArgumentException("Cannot move node into its own downline");
         }
 
-        Node oldParent = child.getParent();
-
-        // remove from old parent
-        if (oldParent != null) {
-            oldParent.getChildren().remove(child);
-        }
-
-        // check duplicate under new parent
         boolean exists = newParent.getChildren().stream()
-                .anyMatch(n -> childName.equalsIgnoreCase(n.getName()));
+                .anyMatch(node -> childName.equalsIgnoreCase(node.getName()));
         if (exists) {
             throw new IllegalArgumentException("Child already exists under new parent: " + childName);
         }
 
-        // set new relationship
+        Node oldParent = child.getParent();
+        if (oldParent != null) {
+            oldParent.getChildren().remove(child);
+        }
+
         child.setParent(newParent);
         newParent.getChildren().add(child);
 
