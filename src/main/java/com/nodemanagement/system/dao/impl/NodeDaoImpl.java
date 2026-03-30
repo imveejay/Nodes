@@ -105,7 +105,6 @@ public class NodeDaoImpl implements NodeDao {
         if (currentNode.equals(targetNode)) {
             return true;
         }
-
         return isNodeDownline(currentNode.getParent(), targetNode);
     }
 }
